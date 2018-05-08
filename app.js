@@ -16,17 +16,27 @@ elements.addButton.addEventListener('click', () => {
   });
 });
 
+document.addEventListener('click', e => {
+  if (e.target.className === 'contactEdit') {
+    const { id } = e.target.dataset;
+  }
+});
+
 // Table Renderer
 const renderTable = entries => {
   elements.contactTable.innerHTML = '';
+  let rows = '';
   Object.entries(entries).forEach(([id, data]) => {
-    const row = document.createElement('tr');
-    row.appendChild(
-      document.createElement('td').appendChild(document.createTextNode('Hello'))
-    );
-    elements.contactTable.appendChild(row);
+    rows += `<tr>
+      <td><input value="${data.name}" id="name-${id}"/></td>
+      <td><input value="${data.detail}" id="detail-${id}"/></td>
+      <td>
+        <button class="contactEdit" data-id="${id}">Edit</button>
+        <button class="contactDelete" data-id="${id}">Delete</button>
+      </td>
+    </tr>`;
   });
-  // console.log(Object.entries(entries));
+  elements.contactTable.innerHTML = rows;
 };
 
 // Renderer
