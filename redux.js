@@ -25,23 +25,23 @@ const generateId = () =>
   // Action Constants
   const actionConstants = {
     ADD_CONTACT: 'rebase/phoneBookApp/ADD_CONTACT',
+    UPDATE_CONTACT: 'rebase/phoneBookApp/UPDATE_CONTACT',
+    DELETE_CONTACT: 'rebase/phoneBookApp/DELETE_CONTACT',
   };
 
-  // Default states
-  const defaultContactCount = 0;
-  const defaultContacts = {};
-
   // Sub Reducers
-  const contactCount = (state = defaultContactCount, action) => {
+  const contactCount = (state = 0, action) => {
     switch (action.type) {
       case actionConstants.ADD_CONTACT:
         return state + 1;
+      case actionConstants.DELETE_CONTACT:
+        return state - 1;
       default:
         return state;
     }
   };
 
-  const contacts = (state = defaultContacts, action) => {
+  const contacts = (state = {}, action) => {
     switch (action.type) {
       case actionConstants.ADD_CONTACT:
         return {
@@ -51,6 +51,20 @@ const generateId = () =>
             detail: action.detail,
           },
         };
+      case actionConstants.UPDATE_CONTACT:
+        return {
+          ...state,
+          [action.id]: {
+            name: action.name,
+            detail: action.detail,
+          },
+        };
+      case actionConstants.DELETE_CONTACT:
+        return Object.entries(state).reduce(
+          (acc, [key, values]) =>
+            key === action.id ? acc : { ...acc, [key]: values },
+          {}
+        );
       default:
         return state;
     }

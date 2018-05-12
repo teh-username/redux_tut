@@ -5,6 +5,7 @@ const elements = {
   nameInput: document.getElementById('contactName'),
   detailInput: document.getElementById('contactDetail'),
   contactTable: document.getElementById('contactList'),
+  contactCount: document.getElementById('contactCount'),
 };
 
 // Attach event listeners
@@ -19,6 +20,18 @@ elements.addButton.addEventListener('click', () => {
 document.addEventListener('click', e => {
   if (e.target.className === 'contactEdit') {
     const { id } = e.target.dataset;
+    store.dispatch({
+      type: constants.UPDATE_CONTACT,
+      id: id,
+      name: document.getElementById(`name-${id}`).value,
+      detail: document.getElementById(`detail-${id}`).value,
+    });
+  } else if (e.target.className === 'contactDelete') {
+    const { id } = e.target.dataset;
+    store.dispatch({
+      type: constants.DELETE_CONTACT,
+      id: id,
+    });
   }
 });
 
@@ -31,7 +44,7 @@ const renderTable = entries => {
       <td><input value="${data.name}" id="name-${id}"/></td>
       <td><input value="${data.detail}" id="detail-${id}"/></td>
       <td>
-        <button class="contactEdit" data-id="${id}">Edit</button>
+        <button class="contactEdit" data-id="${id}">Update</button>
         <button class="contactDelete" data-id="${id}">Delete</button>
       </td>
     </tr>`;
@@ -39,15 +52,15 @@ const renderTable = entries => {
   elements.contactTable.innerHTML = rows;
 };
 
+const renderContactCount = count => {
+  elements.contactCount.innerHTML = count;
+};
+
 // Renderer
 store.subscribe(() => {
   const state = store.getState();
   console.log(state);
   renderTable(state.contacts);
+  renderContactCount(state.contactCount);
 });
 
-// /*
-//   Do separate renderers for each part:
-//     1) Number of contacts
-//     2) Table displayed (better to just rerender the whole thing)
-// */

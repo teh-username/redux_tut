@@ -20,7 +20,7 @@
     <input type="text" placeholder="Contact Detail" id="contactDetail" />
     <button id="addContact">Add to Contacts</button>
   </div>
-  <p>Number of contacts: 12</p>
+  <p>Number of contacts: <span id="contactCount">0</span></p>
   <table>
     <tr>
       <th>Name</th>
@@ -28,22 +28,6 @@
       <th>Actions</th>
     </tr>
     <tbody id="contactList">
-      <tr>
-        <td>Darth Maul</td>
-        <td>62782828</td>
-        <td>
-          <button>Edit</button>
-          <button>Delete</button>
-        </td>
-      </tr>
-      <tr>
-        <td>Darth Malak</td>
-        <td>9283829</td>
-        <td>
-          <button>Edit</button>
-          <button>Delete</button>
-        </td>
-      </tr>
     </tbody>
   </table>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.0/redux.min.js" integrity="sha256-hfNRBJsmJ7BaeBvsxVPdVeDbdEVV/MFNBm4BRLc72OY=" crossorigin="anonymous"></script>
